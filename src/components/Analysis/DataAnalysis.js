@@ -1,5 +1,4 @@
 import React from "react";
-import { Chart as ChartJS } from "chart.js/auto";
 import { Chart, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import { useState, useEffect } from "react";
 import classes from "../Analysis/DataAnalysis.module.css";
