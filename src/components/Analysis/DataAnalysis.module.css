@@ -1,0 +1,68 @@
+.rowC{display:flex; flex-direction:row;}
+
+.outbox {
+  margin: 1rem auto;
+    width: 200%;
+    max-width: 89rem;
+    max-height: 55rem;
+    /* max-width: 55rem;
+    max-height: 30rem; */
+    overflow-y:auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    /* padding: 1rem; */
+    /* text-align: bottomt; */
+    color: white
+}
+  
+  .databox {
+    margin: 1rem;
+    width: 48%;
+    max-width: 45rem;
+    max-height: 30rem;
+    /* max-width: 55rem;
+    max-height: 30rem; */
+    overflow-y:auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    color: white
+  }
+
+  .databox1 {
+    margin: 1rem;
+    width: 90%;
+    max-width: 90rem;
+    max-height: 30rem;
+    /* max-width: 55rem;
+    max-height: 30rem; */
+    overflow-y:auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    color: white
+  }
+
+  .piedoughnut {
+    margin: 1rem;
+    width: 42%;
+    max-width: 45rem;
+    max-height: 40rem;
+    /* max-width: 55rem;
+    max-height: 30rem; */
+    overflow-y:auto;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    color: white
+  }
+  
+
+  .control {
+    margin-bottom: 1rem;
+  }
+  

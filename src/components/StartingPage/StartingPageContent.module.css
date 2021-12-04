@@ -1,0 +1,23 @@
+.starting {
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.starting h1 {
+  font-size: 5rem;
+}
+
+.databox {
+  margin: 3rem auto;
+  width: 200%;
+  max-width: 90rem;
+  max-height: 25rem;
+  overflow-y:auto;
+  border-radius: 6px;
+  background-color: #38015c;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+  color: white
+
+}
