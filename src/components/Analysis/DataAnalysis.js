@@ -1,6 +1,8 @@
 import React from "react";
+import { Chart as ChartJS } from "chart.js/auto";
 import { Chart, Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import classes from "../Analysis/DataAnalysis.module.css";
 
 const DataAnalysis = () => {
@@ -20,23 +22,21 @@ const DataAnalysis = () => {
   const [isGrowingCommExists, setGrowingCommExists] = useState(false);
   const [growingCommExtarct, setGrowingCommExtract] = useState(null);
 
+  const [shrinkCommReqMade, setShrinkCommReqMade] = useState(false);
+  const [isShrinkingCommExists, setShrinkingCommExists] = useState(false);
+  const [shrinkingCommExtarct, setShrinkingCommExtract] = useState(null);
+
   useEffect(() => {
     const identifier = setTimeout(() => {
       if (!isAgeDataExists) {
         if (!ageRequestMade) {
           setageRequestMade(true);
-          fetch("http://localhost:8080/api/v1/analysis/age-spend", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
+          axios
+            .get("http://20.115.144.39:8080/api/v1/analysis/age-spend")
             .then((data) => {
-              // console.log(data);
-              setAgeDataExtract(setAgeData(data));
+              // console.log(data.data);
+              setAgeDataExtract(setAgeData(data.data));
               setAgeDataExists(true);
-              // console.log(ageDataExtract);
             });
         }
       }
@@ -44,15 +44,12 @@ const DataAnalysis = () => {
       if (!isIncomeDataExists) {
         if (!incomeRequestMade) {
           setIncomeRequestMade(true);
-          fetch("http://localhost:8080/api/v1/analysis/income-spend", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
+          axios
+            .get("http://20.115.144.39:8080/api/v1/analysis/income-spend")
+            // .then((response) => response.json())
             .then((data) => {
-              setIncomeDataExtract(setIncomeData(data));
+              // console.log(data.data)
+              setIncomeDataExtract(setIncomeData(data.data));
               setIncomeDataExists(true);
             });
         }
@@ -61,15 +58,12 @@ const DataAnalysis = () => {
       if (!isYearSpendExists) {
         if (!yearRequestMade) {
           setYearRequestMade(true);
-          fetch("http://localhost:8080/api/v1/analysis/year-spend", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
+          axios
+            .get("http://20.115.144.39:8080/api/v1/analysis/year-spend")
+            // .then((response) => response.json())
             .then((data) => {
-              setYearSpendExtract(setYearSpendData(data));
+              // console.log(data.data)
+              setYearSpendExtract(setYearSpendData(data.data));
               setYearSpendExists(true);
             });
         }
@@ -78,17 +72,28 @@ const DataAnalysis = () => {
       if (!isGrowingCommExists) {
         if (!growCommReqMade) {
           setGrowCommReqMade(true);
-          fetch("http://localhost:8080/api/v1/analysis/grow-comm-spend", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
+          axios
+            .get("http://20.115.144.39:8080/api/v1/analysis/grow-comm-spend")
+            // .then((response) => response.json())
             .then((data) => {
-              console.log(data);
-              setGrowingCommExtract(setGrowingData(data));
+              console.log(data.data);
+              setGrowingCommExtract(setGrowingData(data.data));
               setGrowingCommExists(true);
+            });
+        }
+      }
+
+      if (!isShrinkingCommExists) {
+        if (!shrinkCommReqMade) {
+          setShrinkCommReqMade(true);
+          axios
+            // .get("http://localhost:8080/api/v1/analysis/shrink-comm-spend")
+            .get("http://20.115.144.39:8080/api/v1/analysis/shrink-comm-spend")
+            // .then((response) => response.json())
+            .then((data) => {
+              console.log(data.data);
+              setShrinkingCommExtract(setShrinkingData(data.data));
+              setShrinkingCommExists(true);
             });
         }
       }
@@ -101,6 +106,7 @@ const DataAnalysis = () => {
     isIncomeDataExists,
     isYearSpendExists,
     isGrowingCommExists,
+    isShrinkingCommExists,
   ]);
 
   const setAgeData = (data) => {
@@ -197,8 +203,8 @@ const DataAnalysis = () => {
   };
 
   const setGrowingData = (data) => {
-    const getRadarData = (data) => {
-      return Object.entries(data).map((key, val) => {
+    const getGrowDataSets = (data) => {
+      return Object.entries(data).map((key) => {
         return {
           label: key[0],
           data: key[1],
@@ -212,19 +218,37 @@ const DataAnalysis = () => {
 
     const state = {
       labels: [2018, 2019, 2020],
-      datasets: getRadarData(data),
+      datasets: getGrowDataSets(data),
+    };
+    return state;
+  };
+
+  const setShrinkingData = (data) => {
+    const getShrinkDataSets = (data) => {
+      return Object.entries(data).map((key) => {
+        return {
+          label: key[0],
+          data: key[1],
+          fill: true,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "#000000",
+          borderWidth: 2,
+        };
+      });
+    };
+
+    const state = {
+      labels: [2018, 2019, 2020],
+      datasets: getShrinkDataSets(data),
     };
     return state;
   };
 
   return (
     <div>
-      {!isGrowingCommExists || !isYearSpendExists || (
+      {!isGrowingCommExists || !isShrinkingCommExists || (
         <div className={classes.rowC}>
-          <p>
-            Charts showing average spending’s of customers over years. Charts
-            showing growing and shrinking commodities over years.
-          </p>
+          <p>Charts showing growing and shrinking commodities over years.</p>
         </div>
       )}
       <div className={classes.rowC}>
@@ -247,6 +271,32 @@ const DataAnalysis = () => {
           </section>
         )}
 
+        {isShrinkingCommExists && (
+          <section className={classes.databox1}>
+            <Line
+              data={shrinkingCommExtarct}
+              options={{
+                title: {
+                  display: true,
+                  text: "Average Expenses per Income",
+                  fontSize: 20,
+                },
+                legend: {
+                  display: true,
+                  position: "right",
+                },
+              }}
+            />
+          </section>
+        )}
+      </div>
+
+      {isYearSpendExists && (
+        <div className={classes.rowC}>
+          <p>Charts showing average spending’s of customers over years.</p>
+        </div>
+      )}
+      <div className={classes.rowC}>
         {isYearSpendExists && (
           <section className={classes.piedoughnut}>
             <Pie
@@ -265,35 +315,17 @@ const DataAnalysis = () => {
             />
           </section>
         )}
-
-        {isIncomeDataExists && (
-          <section className={classes.piedoughnut}>
-            <Doughnut
-              data={incomeDataExtract}
-              options={{
-                title: {
-                  display: true,
-                  text: "Average Expenses per Income",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "right",
-                },
-              }}
-            />
-          </section>
-        )}
       </div>
 
       <div className={classes.rowC}>
-      {!isAgeDataExists || !isIncomeDataExists || (
-        <div className={classes.rowC}>
-          <p>
-          Charts showing demographic factors – Income and Age group affecting expenditure of customers.
-          </p>
-        </div>
-      )}
+        {!isAgeDataExists || !isIncomeDataExists || (
+          <div className={classes.rowC}>
+            <p>
+              Charts showing demographic factors – Income and Age group
+              affecting expenditure of customers.
+            </p>
+          </div>
+        )}
       </div>
       <div className={classes.rowC}>
         {isAgeDataExists && (

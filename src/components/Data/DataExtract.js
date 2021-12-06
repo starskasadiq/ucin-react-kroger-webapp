@@ -12,7 +12,7 @@ const DataExtract = () => {
     setDataExtract(null);
     const enteredHshd = hshdNumInputRef.current.value;
     setDataExists(false);
-    fetch("http://localhost:8080/api/v1/getHsHdNum/" + enteredHshd, {
+    fetch("http://20.115.144.39:8080/api/v1/getHsHdNum/" + enteredHshd, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
