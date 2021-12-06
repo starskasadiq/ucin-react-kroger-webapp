@@ -1,0 +1,19 @@
+1. create vm
+2. open inbound rules for react and java app
+3. create react and java builds
+    npm run build <= for react app
+    mvn clean install <= for java app
+4. copy the files to remote virtual machine using below command
+    scp -i <rg>.pem -r <dir>/build azureuser@<public_ipv4>:/home/azureuser/<some-name-for-react-app-files>
+    scp -i <rg>.pem <target>/<.jar> azureuser@<public_ipv4>:/home/azureuser/<some-name-for-java-app-files>
+5. install jdk
+    --> sudo apt install oracle-java17-installer
+6. install node
+    --> curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+    --> . ~/.nvm/nvm.sh
+    --> nvm install node
+    --> npm install -g serve
+7. run react app
+    --> serve -s <react-app-build-directory>/ &
+8.  run java app
+    --> java -jar <jar_name> &
